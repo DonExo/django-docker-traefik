@@ -7,10 +7,11 @@
 
 # Traefik dashboard over http
 [api]
-insecure = true
+# insecure = true
+dashboard = false
 
 [log]
-level = "DEBUG"
+level = "INFO"
 
 [accessLog]
 

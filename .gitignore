@@ -2,3 +2,6 @@
 db.sqlite3
 .idea/
 traefik-public-certificates
+
+app/.env
+app/staticfiles
