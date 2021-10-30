@@ -2,6 +2,9 @@ from pathlib import Path
 import environ
 import os
 
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, True)
@@ -13,13 +16,27 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 SECRET_KEY = env('SECRET_KEY')
 
-DEBUG = env('DEBUG')
+DEBUG = env('DEBUG', default=False)
 
-ALLOWED_HOSTS = env('DJANGO_ALLOWED_HOSTS', default=[])
+ALLOWED_HOSTS = env('DJANGO_ALLOWED_HOSTS', default=['*'])
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+sentry_sdk.init(
+    dsn="https://357da24549fc4970bff0f8451a4cac00@o1056278.ingest.sentry.io/6042488",
+    integrations=[DjangoIntegration()],
+
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=1.0,
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True
+)
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -36,6 +53,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'users'
 ]
 
 MIDDLEWARE = [
