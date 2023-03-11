@@ -6,7 +6,7 @@ from users import views
 
 
 def index(request):
-    return HttpResponse("Hello World!")
+    return HttpResponse("Hello World2!")
 
 def trigger_error(request):
     division_by_zero = 1 / 0
