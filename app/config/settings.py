@@ -18,7 +18,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = env('DEBUG', default=False)
 
-ALLOWED_HOSTS = env('DJANGO_ALLOWED_HOSTS', default=['*'])
+ALLOWED_HOSTS = env('DJANGO_ALLOWED_HOSTS', default=[])
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
